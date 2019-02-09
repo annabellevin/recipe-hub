@@ -1,0 +1,90 @@
+   <div class="todos">
+
+      <div>
+      <form (submit)="addTodo($event)">
+      <input [(ngModel)]="newTodo" (keyup.enter)="newTodo=''" class="textfield" name="newTodo"/>
+       <select [(ngModel)]="type" id="type" name="type">
+          <option selected="selected" value="ingredient">Ingredient</option>
+          <option value="step">Step</option>
+          <option value="equipment">Equipment</option>
+          <option value="comment">Comment</option>
+      </select> 
+        <button  type="submit" [disabled]="newTodo===''">Add Todo
+        </button>
+      </form>
+      </div>
+
+      <div [hidden]="newTodo">
+        Type in a new todo...
+      </div>
+
+      <div [hidden]="!newTodo">
+        <!-- Another two-way binding example -->
+        Typing: {{ newTodo }}
+      </div>
+
+
+ </div>   
+ <div class="steps">
+  <h2>Steps</h2>
+    <div
+    cdkDropList
+    #todoList="cdkDropList"
+    [cdkDropListData]="steps"
+    class="example-list"
+    (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let item of steps" cdkDrag>{{typeMap[item.type].indexOf(item) + 1}}. {{item.value}}
+      <span (click)="deleteElement(item.type,i)" class="delete-icon">DELETE</span>
+      </div>
+
+  </div>
+
+
+<div class="ingredients">
+  <h2>Ingredients</h2>
+
+  <div
+    cdkDropList
+    #doneList="cdkDropList"
+    [cdkDropListData]="ingredients"
+    class="example-list"
+    (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let item of ingredients" cdkDrag>{{item.value}}
+    <span (click)="addComment(item)" class="delete-icon">ADD COMMENT</span>
+    <span (click)="deleteElement(item.type,i)" class="delete-icon">DELETE</span>
+    <form><input class="commentIn" type="text" value="Enter here"></form>
+    </div>
+  </div>
+
+  </div>
+  
+<div class="equipment">
+  <h2>Equipment</h2>
+
+  <div
+    cdkDropList
+    #doneList="cdkDropList"
+    [cdkDropListData]="equipments"
+    class="example-list"
+    (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let item of equipments" cdkDrag>{{item.value}}
+    <span (click)="deleteElement(item.type,i)" class="delete-icon">DELETE</span></div>
+  </div>
+
+  </div>
+
+<div class="comments">
+  <h2>Comments</h2>
+
+  <div
+    cdkDropList
+    #doneList="cdkDropList"
+    [cdkDropListData]="comments"
+    class="example-list"
+    (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let item of comments" cdkDrag>{{item.value}}
+    <span (click)="deleteElement(item.type,i)" class="delete-icon">DELETE</span></div>
+  </div>
+
+  </div>
+
